@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>HoopForge • Your Personal Basketball Coach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+      
+        :root {
+            --orange: #ff6600;
+        }
+      
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+      
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+      
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+      
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ff6600;
+            transition: width 0.3s ease;
+        }
+      
+        .nav-link:hover:after {
+            width: 100%;
+        }
+      
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=1920');
+            background-size: cover;
+            background-position: center;
+        }
+      
+        .skill-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+      
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(255 102 0 / 0.2), 0 8px 10px -6px rgb(255 102 0 / 0.2);
+        }
+      
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+      
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+      
+        .progress-bar {
+            height: 6px;
+            background: linear-gradient(to right, #ff6600, #ffaa00);
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white">
+    <!-- Navbar -->
+    <nav class="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-orange-500 rounded-2xl flex items-center justify-center text-2xl font-bold title-font">🏀</div>
+                    <div>
+                        <span class="title-font text-3xl font-semibold tracking-tighter">HoopForge</span>
+                    </div>
+                </div>
+              
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+                    <a href="#" onclick="navigateTo('home')" class="nav-link text-white hover:text-orange-400 px-3 py-2">Home</a>
+                    <a href="#" onclick="navigateTo('basics')" class="nav-link text-white hover:text-orange-400 px-3 py-2">The Basics</a>
+                    <a href="#" onclick="navigateTo('advanced')" class="nav-link text-white hover:text-orange-400 px-3 py-2">Beyond Basics</a>
+                    <a href="#" onclick="navigateTo('self')" class="nav-link text-white hover:text-orange-400 px-3 py-2">Self Improvement</a>
+                    <a href="#" onclick="navigateTo('training')" class="nav-link text-white hover:text-orange-400 px-3 py-2">Weekly Training</a>
+                </div>
+              
+                <div class="flex items-center gap-4">
+                    <div class="bg-zinc-800 text-xs px-3 py-1.5 rounded-full flex items-center gap-2 border border-zinc-700">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span>Level 12 • Guard</span>
+                    </div>
+                    <button onclick="logout()" class="bg-zinc-800 hover:bg-zinc-700 px-6 py-2 rounded-3xl text-sm font-medium flex items-center gap-2 transition-colors">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Log out</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Mobile Nav -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 z-50">
+        <div class="flex justify-around py-2">
+            <button onclick="navigateTo('home')" class="flex flex-col items-center text-xs text-zinc-400 hover:text-orange-400">
+                <i class="fas fa-home text-xl"></i>
+                <span>Home</span>
+            </button>
+            <button onclick="navigateTo('basics')" class="flex flex-col items-center text-xs text-zinc-400 hover:text-orange-400">
+                <i class="fas fa-book text-xl"></i>
+                <span>Basics</span>
+            </button>
+            <button onclick="navigateTo('advanced')" class="flex flex-col items-center text-xs text-zinc-400 hover:text-orange-400">
+                <i class="fas fa-fire text-xl"></i>
+                <span>Advanced</span>
+            </button>
+            <button onclick="navigateTo('self')" class="flex flex-col items-center text-xs text-zinc-400 hover:text-orange-400">
+                <i class="fas fa-brain text-xl"></i>
+                <span>AI Coach</span>
+            </button>
+            <button onclick="navigateTo('training')" class="flex flex-col items-center text-xs text-zinc-400 hover:text-orange-400">
+                <i class="fas fa-dumbbell text-xl"></i>
+                <span>Train</span>
+            </button>
+        </div>
+    </div>
+    <!-- Main Content -->
+    <div id="main-content" class="max-w-7xl mx-auto px-6 pb-24 md:pb-12">
+        <!-- HOME -->
+        <div id="home-page" class="page">
+            <div class="hero-bg h-screen flex items-center relative -mt-16">
+                <div class="max-w-4xl mx-auto px-6 text-center">
+                    <div class="inline-flex items-center gap-2 bg-black/70 backdrop-blur-md px-6 py-2 rounded-3xl mb-8 border border-orange-500/30">
+                        <span class="text-orange-400 text-sm font-medium tracking-widest">NEW SEASON • 2026</span>
+                    </div>
+                    <h1 class="title-font text-7xl md:text-8xl font-bold leading-none mb-6 tracking-tighter">BECOME<br>UNSTOPPABLE</h1>
+                    <p class="text-2xl text-zinc-400 max-w-md mx-auto mb-10">Weekly training plans. Skill breakdowns. AI-powered advice. All in one place.</p>
+                  
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="navigateTo('training')"
+                                class="bg-orange-500 hover:bg-orange-600 text-black font-semibold text-lg px-12 py-6 rounded-3xl flex items-center gap-3 transition-all active:scale-95">
+                            START THIS WEEK'S PLAN
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button onclick="navigateTo('basics')"
+                                class="border border-white/30 hover:bg-white/10 font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-3 transition-all">
+                            LEARN THE BASICS
+                        </button>
+                    </div>
+                  
+                </div>
+            </div>
+          
+        </div>
+        <!-- THE BASICS -->
+        <div id="basics-page" class="page hidden">
+            <div class="py-12">
+                <div class="flex items-end justify-between mb-12">
+                    <div>
+                        <div class="uppercase text-orange-400 text-sm font-medium tracking-[2px]">FOUNDATION</div>
+                        <h2 class="title-font text-6xl font-bold tracking-tighter">The Basics</h2>
+                    </div>
+                    <p class="max-w-md text-zinc-400">Master these five skills and everything else becomes easier.</p>
+                </div>
+              
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Dribbling -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-80 bg-zinc-800 relative">
+                            <img src="https://images.pexels.com/photos/31680401/pexels-photo-31680401/free-photo-of-dynamic-outdoor-basketball-game-action-shot.jpeg" alt="Dribbling" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                <span class="text-emerald-400">★</span> BEGINNER
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center text-4xl">🏀</div>
+                                <div>
+                                    <h3 class="text-3xl title-font font-semibold">Dribbling</h3>
+                                    <p class="text-zinc-400">Control the ball like it's glued to your hand</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'dribble', 'beginner')" class="video-tab-btn active flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-orange-500 text-black">
+                                    <span class="text-emerald-400">★</span> Beginner
+                                </button>
+                                <button onclick="switchVideo(this, 'dribble', 'intermediate')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-amber-400">★★</span> Intermediate
+                                </button>
+                                <button onclick="switchVideo(this, 'dribble', 'advanced')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-red-400">★★★</span> Advanced
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-6" id="dribble-video-container">
+                                <iframe id="dribble-beginner" src="https://www.youtube.com/embed/CMQp0bwjokw" title="Dribbling Tutorial - Beginner" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                                <iframe id="dribble-intermediate" src="https://www.youtube.com/embed/vV0o4XvKuKc" title="Dribbling Tutorial - Intermediate" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="dribble-advanced" src="https://www.youtube.com/embed/b60ODguPJH4" title="Dribbling Tutorial - Advanced" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="flex gap-6">
+                                    <div class="flex-1">
+                                        <div class="font-medium mb-2 text-sm uppercase tracking-widest">Key Points</div>
+                                        <ul class="space-y-2 text-sm text-zinc-300">
+                                            <li class="flex items-start gap-3"><span class="text-orange-400 mt-1">•</span> Fingers spread wide, dribble with fingertips</li>
+                                            <li class="flex items-start gap-3"><span class="text-orange-400 mt-1">•</span> Keep ball below waist</li>
+                                            <li class="flex items-start gap-3"><span class="text-orange-400 mt-1">•</span> Head up — eyes on court</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-medium mb-2 text-sm uppercase tracking-widest">5-Min Drill</div>
+                                        <p class="text-sm text-zinc-400">Stationary dribble → crossover → behind back → 20 reps each hand</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <!-- Shooting -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-80 bg-zinc-800 relative">
+                            <img src="https://media.wired.com/photos/59324e7226780e6c04d2ad55/3:2/w_2560%2Cc_limit/96221381.jpg" alt="Shooting" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                <span class="text-emerald-400">★</span> BEGINNER
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center text-4xl">🏀</div>
+                                <div>
+                                    <h3 class="text-3xl title-font font-semibold">Shooting</h3>
+                                    <p class="text-zinc-400">Perfect form = consistent buckets</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'shooting', 'beginner')" class="video-tab-btn active flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-orange-500 text-black">
+                                    <span class="text-emerald-400">★</span> Beginner
+                                </button>
+                                <button onclick="switchVideo(this, 'shooting', 'intermediate')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-amber-400">★★</span> Intermediate
+                                </button>
+                                <button onclick="switchVideo(this, 'shooting', 'advanced')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-red-400">★★★</span> Advanced
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-6" id="shooting-video-container">
+                                <iframe id="shooting-beginner" src="https://www.youtube.com/embed/UcnB9e5O5NY" title="Shooting Form - Beginner" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                                <iframe id="shooting-intermediate" src="https://www.youtube.com/embed/r-LLMENfl4c" title="Shooting Form - Intermediate" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="shooting-advanced" src="https://www.youtube.com/embed/xhEk-RElRgo" title="Shooting Form - Advanced" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                            </div>
+                            <div class="bg-zinc-800 rounded-2xl p-6 text-sm">
+                                <div class="font-semibold mb-4 flex items-center gap-2"><span class="text-orange-400">B.E.E.F.</span> — The Shooting Formula</div>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div><span class="font-medium">B</span>alance — feet shoulder width</div>
+                                    <div><span class="font-medium">E</span>yes — on the rim</div>
+                                    <div><span class="font-medium">E</span>lbow — under the ball</div>
+                                    <div><span class="font-medium">F</span>ollow through — wrist snap</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <!-- Passing -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-80 bg-zinc-800 relative">
+                            <img src="https://img.ksl.com/slc/3122/312244/31224450.jpg?filter=ksl/gallery" alt="Passing" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center text-4xl">🏀</div>
+                                <div>
+                                    <h3 class="text-3xl title-font font-semibold">Passing</h3>
+                                    <p class="text-zinc-400">Make your teammates better</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'passing', 'beginner')" class="video-tab-btn active flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-orange-500 text-black">
+                                    <span class="text-emerald-400">★</span> Beginner
+                                </button>
+                                <button onclick="switchVideo(this, 'passing', 'intermediate')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-amber-400">★★</span> Intermediate
+                                </button>
+                                <button onclick="switchVideo(this, 'passing', 'advanced')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-red-400">★★★</span> Advanced
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-6" id="passing-video-container">
+                                <iframe id="passing-beginner" src="https://www.youtube.com/embed/SbOsxamKyzY" title="Passing Tutorial - Beginner" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                                <iframe id="passing-intermediate" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Passing Tutorial - Intermediate" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="passing-advanced" src="https://www.youtube.com/embed/CMQp0bwjokw" title="Passing Tutorial - Advanced" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                            </div>
+                            <div class="flex gap-8 text-sm">
+                                <div class="flex-1 space-y-4">
+                                    <div class="bg-zinc-800 p-5 rounded-2xl">
+                                        <div class="font-medium text-orange-400 mb-1">CHEST PASS</div>
+                                        <div class="text-zinc-400">Two hands, snap wrists, step into pass</div>
+                                    </div>
+                                    <div class="bg-zinc-800 p-5 rounded-2xl">
+                                        <div class="font-medium text-orange-400 mb-1">BOUNCE PASS</div>
+                                        <div class="text-zinc-400">Hit the floor ¾ of the way</div>
+                                    </div>
+                                </div>
+                                <div class="flex-1 space-y-4">
+                                    <div class="bg-zinc-800 p-5 rounded-2xl">
+                                        <div class="font-medium text-orange-400 mb-1">OVERHEAD PASS</div>
+                                        <div class="text-zinc-400">Great for outlet passes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <!-- Layups -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-80 bg-zinc-800 relative">
+                            <img src="https://media.gq.com/photos/5f6e1067568fd2aedb018400/16:9/w_2560%2Cc_limit/Jamal-Murray-lebron-james-gq-nba-blog-september-2020.jpg" alt="Layup" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center text-4xl">🏀</div>
+                                <div>
+                                    <h3 class="text-3xl title-font font-semibold">Lay-ups</h3>
+                                    <p class="text-zinc-400">The highest percentage shot in the game</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'layups', 'beginner')" class="video-tab-btn active flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-orange-500 text-black">
+                                    <span class="text-emerald-400">★</span> Beginner
+                                </button>
+                                <button onclick="switchVideo(this, 'layups', 'intermediate')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-amber-400">★★</span> Intermediate
+                                </button>
+                                <button onclick="switchVideo(this, 'layups', 'advanced')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-red-400">★★★</span> Advanced
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-6" id="layups-video-container">
+                                <iframe id="layups-beginner" src="https://www.youtube.com/embed/d0z7QqblJaM" title="Layup Tutorial - Beginner" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                                <iframe id="layups-intermediate" src="https://www.youtube.com/embed/9SOT3VPVOtw" title="Layup Tutorial - Intermediate" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="layups-advanced" src="https://www.youtube.com/embed/j3AbbF-MQgw" title="Layup Tutorial - Advanced" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                            </div>
+                            <div class="bg-emerald-900/30 border border-emerald-400/30 rounded-2xl p-6 text-sm">
+                                <div class="uppercase text-emerald-400 text-xs mb-3 tracking-widest">PRO TIP</div>
+                                <p class="leading-relaxed">Always use the backboard on layups. Aim for the top corner of the square.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Defending -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-80 bg-zinc-800 relative">
+                            <img src="https://www.basketballforcoaches.com/wp-content/uploads/2017/02/on-ball-defense.jpg" alt="Defending" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                <span class="text-emerald-400">★</span> BEGINNER
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center text-4xl">🏀</div>
+                                <div>
+                                    <h3 class="text-3xl title-font font-semibold">Defending</h3>
+                                    <p class="text-zinc-400">Stop your opponent from scoring</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'defending', 'beginner')" class="video-tab-btn active flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-orange-500 text-black">
+                                    <span class="text-emerald-400">★</span> Beginner
+                                </button>
+                                <button onclick="switchVideo(this, 'defending', 'intermediate')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-amber-400">★★</span> Intermediate
+                                </button>
+                                <button onclick="switchVideo(this, 'defending', 'advanced')" class="video-tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-red-400">★★★</span> Advanced
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-6" id="defending-video-container">
+                                <iframe id="defending-beginner" src="https://www.youtube.com/embed/bq_HsQdIjbU" title="Defense Tutorial - Beginner" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                                <iframe id="defending-intermediate" src="https://www.youtube.com/embed/NnQVER_pNjY" title="Defense Tutorial - Intermediate" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="defending-advanced" src="https://www.youtube.com/embed/GCaBFx0GNQQ" title="Defense Tutorial - Advanced" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="flex gap-6">
+                                    <div class="flex-1">
+                                        <div class="font-medium mb-2 text-sm uppercase tracking-widest">Key Points</div>
+                                        <ul class="space-y-2 text-sm text-zinc-300">
+                                            <li class="flex items-start gap-3"><span class="text-orange-400 mt-1">•</span> Stay low in athletic stance</li>
+                                            <li class="flex items-start gap-3"><span class="text-orange-400 mt-1">•</span> Keep hands active</li>
+                                            <li class="flex items-start gap-3"><span class="text-orange-400 mt-1">•</span> Slide feet, don't cross run</li>
+                                            <li class="flex items-start gap-3"><span class="text-orange-400 mt-1">•</span> Eyes on opponent's midsection</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-medium mb-2 text-sm uppercase tracking-widest">5-Min Drill</div>
+                                        <p class="text-sm text-zinc-400">Mirror drill: Face a partner, slide side to side matching their movements without crossing feet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BEYOND THE BASICS -->
+        <div id="advanced-page" class="page hidden">
+            <div class="py-12">
+                <div class="flex items-end justify-between mb-12">
+                    <div>
+                        <div class="uppercase text-orange-400 text-sm font-medium tracking-[2px]">NEXT LEVEL</div>
+                        <h2 class="title-font text-6xl font-bold tracking-tighter">Beyond the Basics</h2>
+                    </div>
+                    <p class="max-w-md text-zinc-400">Moves that separate good players from great ones.</p>
+                </div>
+              
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-64 bg-zinc-800 relative">
+                            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800" alt="Between the Legs Dribble" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                <span class="text-amber-400">★★</span> INTERMEDIATE
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="text-6xl mb-6">🏀</div>
+                            <h3 class="text-3xl font-semibold title-font mb-2">Between the Legs</h3>
+                            <div class="text-orange-400 text-sm mb-6">CHANGE OF DIRECTION</div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'btl', 'beginner')" class="video-tab-btn flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-emerald-400">★</span> Basic
+                                </button>
+                                <button onclick="switchVideo(this, 'btl', 'intermediate')" class="video-tab-btn active flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-orange-500 text-black">
+                                    <span class="text-amber-400">★★</span> Pro
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-8" id="btl-video-container">
+                                <iframe id="btl-beginner" src="https://www.youtube.com/embed/CWdH4NIVHIg" title="Between Legs - Basic" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="btl-intermediate" src="https://www.youtube.com/embed/b60ODguPJH4" title="Between Legs - Pro" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                            </div>
+                            <p class="text-zinc-400 text-sm">Protect the ball with your body while switching hands instantly.</p>
+                        </div>
+                    </div>
+                  
+                    <!-- Card 2 -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-64 bg-zinc-800 relative">
+                            <img src="https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=800" alt="Behind the Back Dribble" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                <span class="text-amber-400">★★</span> INTERMEDIATE
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="text-6xl mb-6">🏀</div>
+                            <h3 class="text-3xl font-semibold title-font mb-2">Behind the Back</h3>
+                            <div class="text-orange-400 text-sm mb-6">FLASHY & EFFECTIVE</div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'btb', 'beginner')" class="video-tab-btn flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-emerald-400">★</span> Basic
+                                </button>
+                                <button onclick="switchVideo(this, 'btb', 'intermediate')" class="video-tab-btn active flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-orange-500 text-black">
+                                    <span class="text-amber-400">★★</span> Pro
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-8" id="btb-video-container">
+                                <iframe id="btb-beginner" src="https://www.youtube.com/embed/_uX5ZPN3Sos" title="Behind Back - Basic" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="btb-intermediate" src="https://www.youtube.com/embed/vV0o4XvKuKc" title="Behind Back - Pro" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                            </div>
+                            <p class="text-zinc-400 text-sm">Great for evading defenders in the open court.</p>
+                        </div>
+                    </div>
+                  
+                    <!-- Card 3 -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-64 bg-zinc-800 relative">
+                            <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?w=800" alt="Pump Fake" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                <span class="text-amber-400">★★</span> INTERMEDIATE
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="text-6xl mb-6">🏀</div>
+                            <h3 class="text-3xl font-semibold title-font mb-2">Pump Fake</h3>
+                            <div class="text-orange-400 text-sm mb-6">GET YOUR SHOT</div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'pumpfake', 'beginner')" class="video-tab-btn flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-emerald-400">★</span> Basic
+                                </button>
+                                <button onclick="switchVideo(this, 'pumpfake', 'intermediate')" class="video-tab-btn active flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-orange-500 text-black">
+                                    <span class="text-amber-400">★★</span> Pro
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-8" id="pumpfake-video-container">
+                                <iframe id="pumpfake-beginner" src="https://www.youtube.com/embed/yZb8OAXnl24" title="Pump Fake - Basic" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="pumpfake-intermediate" src="https://www.youtube.com/embed/r-LLMENfl4c" title="Pump Fake - Pro" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                            </div>
+                            <p class="text-zinc-400 text-sm">Sell the shot, then explode to the rim or create space.</p>
+                        </div>
+                    </div>
+                  
+                    <!-- Card 4 -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden">
+                        <div class="h-64 bg-zinc-800 relative">
+                            <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=800" alt="Step-Back Shot" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                <span class="text-red-400">★★★</span> ADVANCED
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="text-6xl mb-6">🏀</div>
+                            <h3 class="text-3xl font-semibold title-font mb-2">Step-Back</h3>
+                            <div class="text-orange-400 text-sm mb-6">CREATE SPACE</div>
+                            
+                            <!-- Video Tabs -->
+                            <div class="flex gap-2 mb-4">
+                                <button onclick="switchVideo(this, 'stepback', 'beginner')" class="video-tab-btn flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                    <span class="text-amber-400">★★</span> Learn
+                                </button>
+                                <button onclick="switchVideo(this, 'stepback', 'intermediate')" class="video-tab-btn active flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-orange-500 text-black">
+                                    <span class="text-red-400">★★★</span> Master
+                                </button>
+                            </div>
+                            
+                            <div class="video-container mb-8" id="stepback-video-container">
+                                <iframe id="stepback-beginner" src="https://www.youtube.com/embed/-CTGDhPV4S0" title="Step Back - Learn" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                <iframe id="stepback-intermediate" src="https://www.youtube.com/embed/xhEk-RElRgo" title="Step Back - Master" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                            </div>
+                            <p class="text-zinc-400 text-sm">Harden's signature move. Pull back and rise up.</p>
+                        </div>
+                    </div>
+                  
+                    <!-- Card 5 -->
+                    <div class="skill-card bg-zinc-900 rounded-3xl overflow-hidden col-span-1 md:col-span-2">
+                        <div class="flex flex-col md:flex-row">
+                            <div class="md:w-1/2 relative">
+                                <img src="https://images.unsplash.com/photo-1515523110800-9415d13b84a8?w=800" alt="Three Point Shooting" class="w-full h-full object-cover min-h-[400px]">
+                                <div class="absolute top-6 left-6 bg-black/80 px-5 py-2 rounded-2xl text-sm font-medium flex items-center gap-2">
+                                    <span class="text-amber-400">★★</span> INTERMEDIATE
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 bg-zinc-950 p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="text-6xl mb-6">🏀</div>
+                                    <h3 class="text-3xl font-semibold title-font mb-2">Shooting Beyond the Arc</h3>
+                                    <div class="text-orange-400 text-sm mb-8">3-POINTERS & LONG RANGE</div>
+                                    
+                                    <!-- Video Tabs -->
+                                    <div class="flex gap-2 mb-4">
+                                        <button onclick="switchVideo(this, 'threept', 'beginner')" class="video-tab-btn flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-zinc-800 text-zinc-400 hover:bg-zinc-700">
+                                            <span class="text-amber-400">★★</span> Form
+                                        </button>
+                                        <button onclick="switchVideo(this, 'threept', 'intermediate')" class="video-tab-btn active flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-orange-500 text-black">
+                                            <span class="text-red-400">★★★</span> Range
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="video-container mb-8" id="threept-video-container">
+                                        <iframe id="threept-beginner" src="https://www.youtube.com/embed/PdgeX_3pB0A" title="3PT Shooting - Form" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none;"></iframe>
+                                        <iframe id="threept-intermediate" src="https://www.youtube.com/embed/9SOT3VPVOtw" title="3PT Shooting - Range" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                                    </div>
+                                </div>
+                                <div class="space-y-8">
+                                    <div>
+                                        <div class="text-xs uppercase tracking-widest text-amber-400 mb-2">KEY</div>
+                                        <div class="text-2xl font-medium">Lower your release point slightly for deeper range</div>
+                                    </div>
+                                    <div class="h-px bg-zinc-700"></div>
+                                    <div>
+                                        <div class="text-xs uppercase tracking-widest text-amber-400 mb-2">DRILL</div>
+                                        <div class="text-zinc-400">One-dribble pull-up from 3 → 10 makes each side</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SELF IMPROVEMENT -->
+        <div id="self-page" class="page hidden">
+            <div class="max-w-3xl mx-auto py-16">
+                <div class="text-center mb-12">
+                    <div class="inline-flex px-6 py-3 bg-orange-500/10 text-orange-400 rounded-3xl items-center gap-3 mb-6">
+                        <i class="fas fa-robot text-2xl"></i>
+                        <span class="font-medium tracking-widest">AI BASKETBALL COACH</span>
+                    </div>
+                    <h2 class="title-font text-6xl font-bold tracking-tighter mb-4">Ask me anything</h2>
+                    <p class="text-zinc-400">"How do I improve my long-range shot?"<br>"How can I finish stronger at the rim?"</p>
+                </div>
+              
+                <!-- Chat -->
+                <div id="chat-window" class="bg-zinc-900 rounded-3xl p-8 min-h-[420px] mb-8 overflow-y-auto border border-zinc-700">
+                    <!-- Default message -->
+                    <div class="flex gap-6 mb-12">
+                        <div class="w-11 h-11 bg-orange-500 rounded-2xl flex-shrink-0 flex items-center justify-center text-3xl">🏀</div>
+                        <div>
+                            <div class="text-orange-400 text-sm mb-1">HOOPFORGE AI • just now</div>
+                            <div class="bg-zinc-800 rounded-3xl rounded-tl-none px-7 py-5 text-lg leading-relaxed">
+                                Hey! I'm your personal basketball coach. Ask me about shooting, dribbling, defense, conditioning — anything. What do you want to improve today?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+                <!-- Input -->
+                <div class="flex gap-3">
+                    <input id="ai-input"
+                           type="text"
+                           placeholder="How do I get better at finishing through contact?"
+                           class="flex-1 bg-zinc-900 border border-zinc-700 focus:border-orange-400 rounded-3xl px-8 py-6 text-lg outline-none">
+                    <button onclick="askAI()"
+                            class="bg-orange-500 hover:bg-orange-600 w-16 h-16 flex items-center justify-center rounded-3xl text-3xl transition-all active:scale-95">
+                        ↑
+                    </button>
+                </div>
+              
+                <div class="text-xs text-zinc-500 mt-6 flex gap-8 justify-center">
+                    <div class="cursor-pointer hover:text-zinc-300" onclick="quickAsk('How do I improve my long range shot?')">Long range shot</div>
+                    <div class="cursor-pointer hover:text-zinc-300" onclick="quickAsk('How do you get better at running to the backboard and doing a layup?')">Layup finishing</div>
+                    <div class="cursor-pointer hover:text-zinc-300" onclick="quickAsk('Best footwork for euro step?')">Euro step</div>
+                </div>
+            </div>
+        </div>
+        <!-- WEEKLY TRAINING -->
+        <div id="training-page" class="page hidden">
+            <div class="py-12">
+                <div class="flex justify-between items-end mb-12">
+                    <div>
+                        <div class="uppercase text-orange-400 text-sm font-medium tracking-widest">WEEKLY TRAINING PLAN</div>
+                        <h2 class="title-font text-6xl font-bold tracking-tighter">Weekly Training Plan</h2>
+                    </div>
+                    <button onclick="generateNewPlan()"
+                            class="px-8 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-3xl text-sm font-medium flex items-center gap-3">
+                        <i class="fas fa-redo"></i>
+                        NEW PLAN
+                    </button>
+                </div>
+              
+                <div class="grid md:grid-cols-12 gap-8">
+                    <!-- Input form -->
+                    <div class="md:col-span-5 bg-zinc-900 rounded-3xl p-10">
+                        <h3 class="font-semibold text-xl mb-8 flex items-center gap-3">
+                            <span class="text-orange-400">📊</span> Enter Last Week's Results
+                        </h3>
+                      
+                        <div class="space-y-8">
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-zinc-400 mb-3">3PT ATTEMPTS / MADE</label>
+                                <div class="flex gap-4">
+                                    <input id="three-att" type="number" placeholder="0" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-4 text-3xl text-center focus:border-orange-400 outline-none">
+                                    <div class="text-4xl text-zinc-600 pt-3">/</div>
+                                    <input id="three-made" type="number" placeholder="0" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-4 text-3xl text-center focus:border-orange-400 outline-none">
+                                </div>
+                            </div>
+                          
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-zinc-400 mb-3">FREE THROWS ATTEMPTS / MADE</label>
+                                <div class="flex gap-4">
+                                    <input id="ft-att" type="number" placeholder="0" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-4 text-3xl text-center focus:border-orange-400 outline-none">
+                                    <div class="text-4xl text-zinc-600 pt-3">/</div>
+                                    <input id="ft-made" type="number" placeholder="0" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-4 text-3xl text-center focus:border-orange-400 outline-none">
+                                </div>
+                            </div>
+                          
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-zinc-400 mb-3">LAYUPS ATTEMPTED / MADE</label>
+                                <div class="flex gap-4">
+                                    <input id="lay-att" type="number" placeholder="0" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-4 text-3xl text-center focus:border-orange-400 outline-none">
+                                    <div class="text-4xl text-zinc-600 pt-3">/</div>
+                                    <input id="lay-made" type="number" placeholder="0" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-6 py-4 text-3xl text-center focus:border-orange-400 outline-none">
+                                </div>
+                            </div>
+                          
+                            <button onclick="saveResultsAndGenerate()"
+                                    class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:brightness-110 text-black font-bold py-7 rounded-3xl text-xl transition-all">
+                                GENERATE THIS WEEK'S PLAN
+                            </button>
+                        </div>
+                    </div>
+                  
+                    <!-- Generated plan -->
+                    <div id="plan-display" class="md:col-span-7 bg-zinc-900 rounded-3xl p-10">
+                        <div id="plan-content">
+                            <div class="text-center py-20 text-zinc-500">
+                                <div class="text-6xl mb-6">📅</div>
+                                <p class="font-medium">Enter your results above to generate a custom weekly plan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-black py-16 border-t border-zinc-800">
+        <div class="max-w-7xl mx-auto px-6 text-xs text-zinc-500 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>© 2026 HoopForge • Built for hoopers, by hoopers</div>
+            <div class="flex gap-8">
+                <a href="https://www.instagram.com/nba/" class="hover:text-orange-400">Instagram</a>
+                <a href="https://www.tiktok.com/@nba" class="hover:text-orange-400">TikTok</a>
+                <a href="https://www.youtube.com/@NBA" class="hover:text-orange-400">YouTube</a>
+            </div>
+            <div>Made with ❤️ and sweat</div>
+        </div>
+    </footer>
+    <script>
+        // Tailwind script already included
+      
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.add('hidden')
+            })
+            document.getElementById(page + '-page').classList.remove('hidden')
+        }
+      
+        // Default to home
+        window.onload = () => {
+            navigateTo('home')
+        }
+      
+        // Video switching function
+        function switchVideo(button, category, level) {
+            // Get all buttons in the same container
+            const container = button.closest('.p-8');
+            const buttons = container.querySelectorAll('.video-tab-btn');
+            
+            // Remove active class from all buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-orange-500', 'text-black');
+                btn.classList.add('bg-zinc-800', 'text-zinc-400');
+            });
+            
+            // Add active class to clicked button
+            button.classList.add('active', 'bg-orange-500', 'text-black');
+            button.classList.remove('bg-zinc-800', 'text-zinc-400');
+            
+            // Hide all videos in this category
+            const videoContainer = document.getElementById(category + '-video-container');
+            const videos = videoContainer.querySelectorAll('iframe');
+            videos.forEach(video => {
+                video.style.display = 'none';
+            });
+            
+            // Show selected video
+            const selectedVideo = document.getElementById(category + '-' + level);
+            if (selectedVideo) {
+                selectedVideo.style.display = 'block';
+            }
+        }
+      
+        // AI Chat
+        let chatHistory = []
+      
+        function addChatMessage(sender, message) {
+            const chatWindow = document.getElementById('chat-window')
+          
+            const div = document.createElement('div')
+            div.className = `flex gap-6 mb-8 ${sender === 'user' ? 'justify-end' : ''}`
+          
+            if (sender === 'ai') {
+                div.innerHTML = `
+                    <div class="w-11 h-11 bg-orange-500 rounded-2xl flex-shrink-0 flex items-center justify-center text-3xl">🏀</div>
+                    <div class="max-w-[75%]">
+                        <div class="text-orange-400 text-sm mb-1">HOOPFORGE AI</div>
+                        <div class="bg-zinc-800 rounded-3xl rounded-tl-none px-7 py-5 leading-relaxed">${message}</div>
+                    </div>
+                `
+            } else {
+                div.innerHTML = `
+                    <div class="max-w-[75%]">
+                        <div class="bg-orange-600 rounded-3xl rounded-tr-none px-7 py-5 leading-relaxed">${message}</div>
+                    </div>
+                `
+            }
+          
+            chatWindow.appendChild(div)
+            chatWindow.scrollTop = chatWindow.scrollHeight
+        }
+      
+        function askAI() {
+            const input = document.getElementById('ai-input')
+            const question = input.value.trim()
+            if (!question) return
+          
+            // Add user message
+            addChatMessage('user', question)
+            input.value = ''
+          
+            // Simulate AI thinking
+            setTimeout(() => {
+                let response = "Great question! Here's how to improve that..."
+              
+                const q = question.toLowerCase()
+              
+                if (q.includes('long range') || q.includes('three') || q.includes('3pt')) {
+                    response = `To improve your long-range shot:<br><br>1. Strengthen your legs with box jumps and single-leg squats.<br>2. Practice one-dribble pull-ups from 3 feet behind the line.<br>3. Use the BEEF method with emphasis on leg power.<br>4. Record yourself — check your release height and elbow alignment.<br><br>Do 50 makes daily from the same spot. Consistency beats volume.`
+                }
+                else if (q.includes('layup') || q.includes('backboard') || q.includes('finish')) {
+                    response = `Finishing through contact at the rim:<br><br>• Explode off the outside foot<br>• Protect the ball with your body<br>• Use the backboard on 80% of finishes<br>• Practice "power layups" — take 2 hard dribbles, jump off two feet, shield the ball<br><br>Drill: Mikan drill + contact finishes with a friend pushing you.`
+                }
+                else if (q.includes('euro')) {
+                    response = `Euro step footwork:<br><br>1. Gather the ball on your second step<br>2. Plant your inside foot<br>3. Swing the ball and opposite leg past the defender<br>4. Finish high off the glass<br><br>Start slow, film it, speed it up.`
+                }
+                else {
+                    response = `Solid question. The key is deliberate practice with video feedback.<br><br>Break it down into micro-skills, drill 10-15 minutes focused on that one thing, then integrate into game-like situations.<br><br>Want me to build you a 7-day plan for this skill?`
+                }
+              
+                addChatMessage('ai', response)
+            }, 800)
+        }
+      
+        function quickAsk(question) {
+            document.getElementById('ai-input').value = question
+            askAI()
+        }
+      
+        // Training logic
+        function saveResultsAndGenerate() {
+            const threeAtt = parseInt(document.getElementById('three-att').value) || 0
+            const threeMade = parseInt(document.getElementById('three-made').value) || 0
+            const ftAtt = parseInt(document.getElementById('ft-att').value) || 0
+            const ftMade = parseInt(document.getElementById('ft-made').value) || 0
+            const layAtt = parseInt(document.getElementById('lay-att').value) || 0
+            const layMade = parseInt(document.getElementById('lay-made').value) || 0
+          
+            const threePct = threeAtt > 0 ? Math.round((threeMade / threeAtt) * 100) : 0
+            const ftPct = ftAtt > 0 ? Math.round((ftMade / ftAtt) * 100) : 0
+            const layPct = layAtt > 0 ? Math.round((layMade / layAtt) * 100) : 0
+          
+            // Generate plan
+            let planHTML = `
+                <div class="mb-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="text-3xl title-font font-bold">Week 5 Plan</div>
+                        <div class="bg-emerald-400 text-black text-xs font-bold px-6 py-2 rounded-3xl">4 SESSIONS • 45-60 MIN</div>
+                    </div>
+                  
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Day 1 -->
+                        <div class="bg-zinc-800 rounded-3xl p-7">
+                            <div class="uppercase text-[10px] tracking-[1px] text-orange-400 font-medium mb-2">DAY 1 • MON</div>
+                            <div class="font-semibold text-xl mb-6">Ball Handling + Finishing</div>
+                            <ul class="space-y-4 text-sm">
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">01</span> 8 min stationary dribble variations</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">02</span> Between legs + behind back 4x20 each hand</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">03</span> Mikan + reverse layups (50 makes)</li>
+                            </ul>
+                        </div>
+                      
+                        <!-- Day 2 -->
+                        <div class="bg-zinc-800 rounded-3xl p-7">
+                            <div class="uppercase text-[10px] tracking-[1px] text-orange-400 font-medium mb-2">DAY 2 • WED</div>
+                            <div class="font-semibold text-xl mb-6">Shooting Focus</div>
+                            <ul class="space-y-4 text-sm">
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">01</span> Form shooting 100 makes close</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">02</span> 3PT from 5 spots (10 makes each)</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">03</span> Pull-up jumpers after dribble</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Day 3 -->
+                        <div class="bg-zinc-800 rounded-3xl p-7">
+                            <div class="uppercase text-[10px] tracking-[1px] text-orange-400 font-medium mb-2">DAY 3 • FRI</div>
+                            <div class="font-semibold text-xl mb-6">Free Throws + Layups</div>
+                            <ul class="space-y-4 text-sm">
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">01</span> Free throw routine - 100 attempts</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">02</span> Layup package both sides</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">03</span> Contact finish drills</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Day 4 -->
+                        <div class="bg-zinc-800 rounded-3xl p-7">
+                            <div class="uppercase text-[10px] tracking-[1px] text-orange-400 font-medium mb-2">DAY 4 • SAT</div>
+                            <div class="font-semibold text-xl mb-6">Game Simulation</div>
+                            <ul class="space-y-4 text-sm">
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">01</span> 1v1 moves into shots</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">02</span> Conditioned shooting drills</li>
+                                <li class="flex items-center gap-3"><span class="bg-zinc-700 w-6 h-6 flex items-center justify-center rounded-xl text-xs">03</span> Scrimmage or pickup games</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <div class="bg-zinc-800 rounded-2xl p-6 text-center">
+                        <div class="text-zinc-400 text-xs uppercase tracking-widest mb-2">3PT %</div>
+                        <div class="text-4xl font-bold ${threePct >= 35 ? 'text-emerald-400' : threePct >= 25 ? 'text-amber-400' : 'text-orange-400'}">${threePct}%</div>
+                        <div class="text-zinc-500 text-xs mt-1">${threeMade}/${threeAtt}</div>
+                    </div>
+                    <div class="bg-zinc-800 rounded-2xl p-6 text-center">
+                        <div class="text-zinc-400 text-xs uppercase tracking-widest mb-2">FT %</div>
+                        <div class="text-4xl font-bold ${ftPct >= 80 ? 'text-emerald-400' : ftPct >= 70 ? 'text-amber-400' : 'text-orange-400'}">${ftPct}%</div>
+                        <div class="text-zinc-500 text-xs mt-1">${ftMade}/${ftAtt}</div>
+                    </div>
+                    <div class="bg-zinc-800 rounded-2xl p-6 text-center">
+                        <div class="text-zinc-400 text-xs uppercase tracking-widest mb-2">Layup %</div>
+                        <div class="text-4xl font-bold ${layPct >= 75 ? 'text-emerald-400' : layPct >= 60 ? 'text-amber-400' : 'text-orange-400'}">${layPct}%</div>
+                        <div class="text-zinc-500 text-xs mt-1">${layMade}/${layAtt}</div>
+                    </div>
+                </div>
+              
+                <div class="bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-400/30 rounded-3xl p-8 text-center">
+                    <div class="text-orange-400 text-sm font-medium tracking-widest mb-3">THIS WEEK'S FOCUS</div>
+                    <div class="text-2xl title-font font-bold mb-2">
+                        ${threePct < 30 ? 'Improve Your 3-Point Shooting' : ftPct < 75 ? 'Master Free Throws' : layPct < 70 ? 'Perfect Your Layups' : 'Maintain Excellence Across All Areas'}
+                    </div>
+                    <div class="text-zinc-400 mt-2">
+                        ${threePct < 30 ? 'Focus on form and consistency from beyond the arc' : ftPct < 75 ? 'Build a consistent free throw routine' : layPct < 70 ? 'Work on finishing through contact' : 'Keep grinding and stay sharp!'}
+                    </div>
+                </div>
+            `
+            document.getElementById('plan-content').innerHTML = planHTML
+        }
+      
+        function generateNewPlan() {
+            // Randomize inputs for demo removed to avoid random data
+            saveResultsAndGenerate()
+        }
+      
+        function logout() {
+            if (confirm("Log out of HoopForge?")) {
+                alert("You've been logged out. Come back stronger tomorrow! 🏀")
+            }
+        }
+      
+        // Keyboard support for AI
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.getElementById('self-page').classList.contains('hidden') === false) {
+                document.getElementById('ai-input').focus()
+                e.preventDefault()
+            }
+        })
+      
+    </script>
+</body>
+</html>
